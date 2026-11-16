@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stuffbynoel | Cyberpunk Portfolio</title>
+    
+    <!-- Google Fonts: Silkscreen and Jersey 10 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            dark: '#0a0a0c',
+                            green: '#39ff14',
+                            blue: '#00f3ff',
+                            purple: '#b026ff'
+                        }
+                    },
+                    fontFamily: {
+                        'mono': ['"Silkscreen"', 'monospace'],
+                        'jersey': ['"Jersey 10"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for Cyberpunk Effects -->
+    <style>
+        body {
+            background-color: #050505;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Fixed Background Canvas */
+        #vhsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none; /* Allows clicks to pass through to the HTML content */
+        }
+
+        /* Neon Text & Borders */
+        .neon-text-green {
+            color: #39ff14;
+            text-shadow: 0 0 5px rgba(57, 255, 20, 0.5), 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+        
+        .neon-text-blue {
+            color: #00f3ff;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.5), 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .neon-border-green {
+            border-color: #39ff14;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2), inset 0 0 10px rgba(57, 255, 20, 0.1);
+        }
+
+        .neon-border-blue {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
+        }
+
+        /* Glitch Hover Effect for Buttons */
+        .cyber-btn {
+            position: relative;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background-color: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        .cyber-btn-green:hover {
+            background-color: #39ff14;
+            color: #050505;
+            box-shadow: 0 0 15px #39ff14;
+        }
+        .cyber-btn-blue:hover {
+            background-color: #00f3ff;
+            color: #050505;
+            box-shadow: 0 0 15px #00f3ff;
+        }
+
+        /* Content panels with blur for readability over glowing canvas */
+        .glass-panel {
+            background-color: rgba(10, 10, 12, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="font-mono antialiased selection:bg-cyber-blue selection:text-black">
+
+    <!-- Interactive VHS Scanline Background -->
+    <canvas id="vhsCanvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 w-full z-50 glass-panel border-b-cyber-blue/30 border-b">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-white hover:neon-text-blue transition-all duration-300">
+                > stuffby<span class="neon-text-blue">noel</span>_
+            </a>
+            <div class="text-cyber-green text-sm font-bold tracking-widest">
+                2026
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-20">
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center px-6">
+            <div class="text-center glass-panel p-10 md:p-16 border-l-4 border-l-cyber-blue neon-border-blue relative overflow-hidden">
+                <!-- Decorative Corner -->
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyber-blue m-2 opacity-50"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-cyber-blue m-2 opacity-50"></div>
+
+                <a href="#comms" class="group relative inline-flex items-center justify-center mb-4 border border-cyber-green/50 text-cyber-green text-xl uppercase bg-cyber-green/10 font-jersey tracking-wider overflow-hidden cursor-pointer transition-colors duration-300 hover:bg-cyber-green hover:text-cyber-black hover:neon-border-green shadow-[0_0_10px_rgba(57,255,20,0.1)]">
+                    <!-- Invisible sizing wrapper to lock the dimensions perfectly -->
+                    <div class="px-4 py-1.5 flex items-center gap-2 opacity-0 pointer-events-none">
+                        <span class="w-2.5 h-2.5"></span>
+                        <span>status : available for work</span>
+                    </div>
+                    
+                    <!-- Default Status: Visible normally, slides up on hover -->
+                    <div class="absolute inset-0 px-4 py-1.5 flex items-center justify-center gap-2 transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyber-green"></span>
+                        </span>
+                        <span>status : available for work</span>
+                    </div>
+
+                    <!-- Hover Text: Hidden below normally, slides up into view on hover -->
+                    <div class="absolute inset-0 px-4 py-1.5 flex items-center justify-center transition-transform duration-300 ease-in-out translate-y-full group-hover:translate-y-0 font-bold tracking-widest">
+                        > hire me <
+                    </div>
+                </a>
+                
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 uppercase tracking-tight neon-text-green">
+                    Noel Mathew
+                </h1>
+                <div class="mt-6 text-gray-300 max-w-xl mx-auto text-2xl leading-relaxed flex flex-col gap-2 font-jersey tracking-wide">
+                    <p class="text-white">> Creating stories through motion</p>
+                    <p class="text-cyber-blue">3D, Motion graphics, Game Development</p>
+                </div>
+                
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="#projects" class="cyber-btn cyber-btn-green px-8 py-3 border border-cyber-green text-cyber-green text-sm font-bold">
+                        > PROJECTS
+                    </a>
+                    <a href="#comms" class="cyber-btn cyber-btn-blue px-8 py-3 border border-cyber-blue text-cyber-blue text-sm font-bold">
+                        > COMMS
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6">
+            <div class="container mx-auto max-w-4xl glass-panel p-8 md:p-12 border border-gray-800">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                    <span class="text-cyber-green">01.</span> <span class="neon-text-green">SYS_INFO</span>
+                </h2>
+                <div class="text-gray-300 space-y-4 text-xl md:text-2xl leading-relaxed font-jersey tracking-wide">
+                    <p>> ACCESSING MEMORY DATABANKS...</p>
+                    <p>> I am a creator of digital experiences, fusing code and design to build atmospheric applications. My core logic loop involves solving complex problems while maintaining a high visual fidelity.</p>
+                    <div class="mt-6 border border-gray-700 p-4 bg-black/50 font-mono tracking-normal text-sm md:text-base">
+                        <p class="text-cyber-blue mb-2">LOADED_MODULES:</p>
+                        <ul class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            <li>- JavaScript (ES6+)</li>
+                            <li>- React / Next.js</li>
+                            <li>- HTML5 Canvas</li>
+                            <li>- Three.js / WebGL</li>
+                            <li>- Tailwind CSS</li>
+                            <li>- Node.js</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 px-6 min-h-screen">
+            <div class="container mx-auto max-w-5xl">
+                <div class="mb-12 glass-panel inline-block p-4 border border-gray-800">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+                        <span class="text-cyber-blue">02.</span> <span class="neon-text-blue">EXECUTABLES</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1 -->
+                    <div class="glass-panel border border-gray-800 hover:border-cyber-green transition-colors duration-300 group flex flex-col">
+                        <div class="h-48 bg-black relative border-b border-gray-800 overflow-hidden flex items-center justify-center">
+                            <span class="text-cyber-green opacity-50 group-hover:opacity-100 transition-opacity font-bold text-lg">NEURAL_NET.EXE</span>
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')] mix-blend-overlay"></div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-white group-hover:neon-text-green transition-colors">Project_Oasis</h3>
+                                <span class="text-xs text-cyber-black bg-cyber-green px-2 py-1 font-bold">V 1.2</span>
+                            </div>
+                            <p class="text-gray-400 text-xl mb-6 flex-grow font-jersey tracking-wide">
+                                A full-stack web application designed for visualizing data streams in real-time. Built with interactive 3D elements and responsive grid systems.
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="#" class="text-xs text-gray-500 hover:text-cyber-green transition-colors">> SOURCE</a>
+                                <a href="#" class="text-xs text-gray-500 hover:text-cyber-green transition-colors">> LIVE_DEMO</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="glass-panel border border-gray-800 hover:border-cyber-blue transition-colors duration-300 group flex flex-col">
+                        <div class="h-48 bg-black relative border-b border-gray-800 overflow-hidden flex items-center justify-center">
+                            <span class="text-cyber-blue opacity-50 group-hover:opacity-100 transition-opacity font-bold text-lg">DATAVERSE.SH</span>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-white group-hover:neon-text-blue transition-colors">DataVerse</h3>
+                                <span class="text-xs text-cyber-black bg-cyber-blue px-2 py-1 font-bold">BETA</span>
+                            </div>
+                            <p class="text-gray-400 text-xl mb-6 flex-grow font-jersey tracking-wide">
+                                An interactive environment explorer. Users navigate through terminal-like interfaces to discover hidden easter eggs and lore.
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="#" class="text-xs text-gray-500 hover:text-cyber-blue transition-colors">> SOURCE</a>
+                                <a href="#" class="text-xs text-gray-500 hover:text-cyber-blue transition-colors">> LIVE_DEMO</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-8 border-t border-gray-900 glass-panel mt-12 text-center" id="comms">
+            <p class="text-gray-600 text-xl mb-2 font-jersey tracking-wide">END_OF_LINE</p>
+            <p class="text-gray-400 text-2xl font-jersey tracking-wide">
+                > Contact: <a href="mailto:sysadmin@stuffbynoel.com" class="text-cyber-blue hover:text-cyber-green transition-colors">sysadmin@stuffbynoel.com</a>
+            </p>
+            <p class="text-gray-600 text-lg mt-4 font-jersey tracking-wide">© 2026 stuffbynoel. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <!-- Canvas Animation Script -->
+    <script>
+        const canvas = document.getElementById('vhsCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let mouseX = -1000;
+        let mouseY = -1000;
+        let time = 0;
+
+        // Ensure canvas fits the screen exactly
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize(); // Initial sizing
+
+        // Track mouse position
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Track touch position for mobile interactivity
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+            }
+        });
+
+        // The animation loop
+        function draw() {
+            // 1. Draw solid dark background to clear previous frame
+            ctx.fillStyle = '#050505';
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Draw the base dim scanlines everywhere
+            // Using a dim cyan color
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+
+            // 3. Create and draw the radial gradient glow around the cursor
+            // The gradient fades from bright cyan/green to transparent
+            const gradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 250);
+            gradient.addColorStop(0, 'rgba(0, 243, 255, 0.7)');    // Bright core
+            gradient.addColorStop(0.4, 'rgba(57, 255, 20, 0.2)');  // Greenish mid
+            gradient.addColorStop(1, 'rgba(0, 243, 255, 0)');      // Fades out completely
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // 4. Draw the actual scanline "gaps" (black lines) over everything
+            // This is the trick: instead of drawing bright lines, we draw the black gaps
+            // so the gradient and base colors peek through the remaining thin strips.
+            ctx.fillStyle = '#050505';
+            
+            // Step size determines the thickness of the scanline pattern
+            const scanlineThickness = 4;
+            const gapThickness = 2; 
+            
+            // Move scanlines slightly over time for a glitchy VHS feel
+            time += 0.5;
+            const yOffset = time % scanlineThickness;
+
+            for (let y = -scanlineThickness; y < height; y += scanlineThickness) {
+                ctx.fillRect(0, y + yOffset, width, gapThickness);
+            }
+
+            // 5. Add random static/noise to complete the VHS look
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+            for(let i = 0; i < 60; i++) {
+                const rx = Math.random() * width;
+                const ry = Math.random() * height;
+                ctx.fillRect(rx, ry, 1.5, 1.5);
+            }
+
+            // Loop
+            requestAnimationFrame(draw);
+        }
+
+        // Start animation
+        draw();
+    </script>
+</body>
+</html>
