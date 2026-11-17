@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stuffbynoel | Portfolio</title>
     
+    <!-- Google Fonts: Poppins and Bebas Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -14,46 +19,300 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        'jersey': ['"Jersey 10"', 'sans-serif'],
+                        'poppins': ['"Poppins"', 'sans-serif'],
+                        'bebas': ['"Bebas Neue"', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-
-    <!-- Custom CSS for Font Face -->
     <style>
-        @font-face {
-            font-family: 'Jersey 10';
-            src: url('Jersey10-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
+        /* Custom Easing for the Scatter/Arrange transitions */
+        .proj-outer {
+            transition: left 1s cubic-bezier(0.25, 1, 0.5, 1), top 1s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        
-        body {
-            background-color: #000000;
-            color: #ffffff;
+        /* Very subtle, fast transition for inner scale to smooth out mouse polling slightly */
+        .proj-inner {
+            transition: transform 0.05s linear;
         }
     </style>
 </head>
-<body class="font-jersey h-screen w-screen overflow-hidden flex flex-col bg-black text-white selection:bg-white selection:text-black">
+<body class="font-poppins overflow-x-hidden flex flex-col bg-black text-white selection:bg-white selection:text-black">
 
     <!-- Navigation Header -->
-    <header class="fixed top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-50">
-        <div class="text-2xl md:text-4xl tracking-widest hover:opacity-75 transition-opacity cursor-pointer">
-            stuffbynoel
+    <header class="fixed top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-50 font-light mix-blend-difference pointer-events-none">
+        <div class="text-xs md:text-sm tracking-widest pointer-events-auto cursor-pointer">
+            @stuffbynoel
         </div>
-        <div class="text-2xl md:text-4xl tracking-widest">
+        <div class="text-xs md:text-sm tracking-widest">
             2026
         </div>
     </header>
 
-    <!-- Hero Section (Centered Name) -->
-    <main class="flex-1 flex items-center justify-center px-4">
-        <h1 class="text-7xl md:text-9xl lg:text-[10rem] tracking-widest uppercase text-center leading-none">
-            Noel Mathew
-        </h1>
-    </main>
+    <!-- Hero Section -->
+    <section class="h-screen w-full flex flex-col items-center justify-center px-4 relative">
+        <div id="hero-content" class="flex flex-col items-center text-center will-change-transform z-10">
+            <h1 class="font-bebas text-7xl md:text-9xl lg:text-[12rem] tracking-wide text-center leading-none mb-4">
+                NOEL MATHEW
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-400 font-light tracking-widest text-center mb-1">
+                Telling stories through motion
+            </p>
+            <p class="text-sm md:text-lg text-gray-500 font-light tracking-widest text-center">
+                3D | Motion Graphic | Game Dev
+            </p>
+        </div>
+    </section>
 
+    <!-- About Me Section -->
+    <section class="h-screen w-full flex flex-col items-center justify-center px-6 md:px-20 relative overflow-hidden bg-black">
+        <!-- Large Background Typography for Parallax -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <h1 id="about-bg-text" class="font-bebas text-[12rem] md:text-[20rem] lg:text-[28rem] text-zinc-900 opacity-40 whitespace-nowrap will-change-transform">
+                ABOUT ME
+            </h1>
+        </div>
+
+        <!-- Foreground Content -->
+        <div id="about-content" class="max-w-3xl flex flex-col items-center text-center will-change-transform opacity-0 translate-y-12 z-10 mix-blend-difference">
+            <p class="text-lg md:text-2xl lg:text-3xl text-gray-200 font-light tracking-wide leading-relaxed">
+                I am a 3D artist, motion graphics designer, and game developer. I specialize in building digital realities and crafting immersive interactive experiences that captivate and inspire.
+            </p>
+        </div>
+    </section>
+
+    <!-- Work Section (Interactive Scatter/Arrange) -->
+    <section id="work-section" class="relative w-full h-[100vh] min-h-[800px] bg-black overflow-hidden flex flex-col items-center justify-center">
+        
+        <!-- Arranged Category Titles (Fades in when arranged) -->
+        <div id="cat-titles" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-1000 z-0">
+            <h3 class="absolute top-[12%] left-[20%] -translate-x-1/2 -translate-y-1/2 font-bebas text-3xl md:text-5xl tracking-widest text-gray-400">GAME DEV</h3>
+            <h3 class="absolute top-[12%] left-[50%] -translate-x-1/2 -translate-y-1/2 font-bebas text-3xl md:text-5xl tracking-widest text-gray-400">MOTION</h3>
+            <h3 class="absolute top-[12%] left-[80%] -translate-x-1/2 -translate-y-1/2 font-bebas text-3xl md:text-5xl tracking-widest text-gray-400">3D</h3>
+        </div>
+
+        <!-- Projects Container -->
+        <div id="projects-container" class="absolute inset-0 pointer-events-none z-10">
+            <!-- Project Cards Injected by JS -->
+        </div>
+
+        <!-- Action Button -->
+        <button id="arrange-btn" class="absolute bottom-12 z-[100] px-10 py-3 bg-white text-black font-bebas text-2xl tracking-widest rounded-full hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all pointer-events-auto shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+            ARRANGE
+        </button>
+    </section>
+
+    <!-- Interactive Scripts -->
+    <script>
+        /* -----------------------------------------------------------------
+           1. Parallax Scroll Logic (Hero & About Sections)
+        ----------------------------------------------------------------- */
+        const heroContent = document.getElementById('hero-content');
+        const aboutContent = document.getElementById('about-content');
+        const aboutBgText = document.getElementById('about-bg-text');
+        const aboutSection = aboutContent.parentElement;
+
+        function updateParallax() {
+            const scrollY = window.scrollY;
+            const vh = window.innerHeight;
+
+            // Hero Parallax
+            if (heroContent) {
+                const heroOpacity = Math.max(1 - (scrollY / (vh * 0.7)), 0);
+                const heroY = scrollY * 0.4; 
+                heroContent.style.opacity = heroOpacity;
+                heroContent.style.transform = `translateY(${heroY}px)`;
+            }
+
+            // About Me Parallax
+            if (aboutContent && aboutBgText) {
+                const rect = aboutSection.getBoundingClientRect();
+                let progress = 1 - (rect.top / vh); 
+
+                if (progress >= -0.5 && progress <= 2) {
+                    // Foreground text (glides up quickly)
+                    const yOffset = Math.max(120 - (progress * 150), -50);
+                    const opacity = Math.max(0, Math.min(progress * 1.5, 1));
+                    aboutContent.style.transform = `translateY(${yOffset}px)`;
+                    aboutContent.style.opacity = opacity;
+
+                    // Background massive text (moves up slowly for depth)
+                    const bgYOffset = (progress - 0.5) * -100;
+                    aboutBgText.style.transform = `translateY(${bgYOffset}px)`;
+                }
+            }
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateParallax();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        updateParallax();
+
+
+        /* -----------------------------------------------------------------
+           2. Work Section Interactive Logic (Scatter, Arrange, Hover)
+        ----------------------------------------------------------------- */
+        const projectsData = [
+            { title: 'UpDstairs', cat: 'Game Dev' },
+            { title: '9Bit', cat: 'Game Dev' },
+            { title: 'Kaha Pe?', cat: 'Game Dev' },
+            { title: 'SUBG', cat: 'Game Dev' },
+            { title: 'Mars Traveler', cat: 'Game Dev' },
+            { title: 'Uber Share', cat: 'Motion' },
+            { title: 'Hello Kids', cat: 'Motion' },
+            { title: 'UI Animations', cat: 'Motion' },
+            { title: 'Pablo Cleats', cat: '3D' },
+            { title: 'Jayrin Asset', cat: '3D' },
+            { title: 'Product Viz', cat: '3D' },
+            { title: 'Packshots', cat: '3D' }
+        ];
+
+        const container = document.getElementById('projects-container');
+        const arrangeBtn = document.getElementById('arrange-btn');
+        const catTitles = document.getElementById('cat-titles');
+        const workSection = document.getElementById('work-section');
+        
+        let isArranged = false;
+        const projectElements = []; // Store references to outer wrappers
+
+        // Initialize Projects into DOM
+        function initProjects() {
+            projectsData.forEach((proj, idx) => {
+                // Outer wrapper: handles absolute positioning & CSS transition for scatter/arrange
+                const outer = document.createElement('div');
+                outer.className = 'proj-outer absolute transform -translate-x-1/2 -translate-y-1/2 w-32 h-20 md:w-48 md:h-32 lg:w-56 lg:h-36 pointer-events-auto cursor-pointer';
+                outer.style.zIndex = 10;
+
+                // Inner wrapper: handles dynamic JS transform scale for hover proximity
+                const inner = document.createElement('div');
+                inner.className = 'proj-inner relative w-full h-full bg-zinc-900 border border-zinc-800 shadow-2xl overflow-hidden';
+                
+                // Placeholder Image
+                const img = document.createElement('img');
+                const encodedTitle = encodeURIComponent(proj.title);
+                img.src = `https://placehold.co/400x300/111/fff?text=${encodedTitle}`;
+                img.className = 'absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity hover:mix-blend-normal transition-all duration-300';
+                
+                // Label
+                const label = document.createElement('div');
+                label.className = 'absolute bottom-2 left-2 pointer-events-none bg-black/60 px-2 py-1 rounded backdrop-blur-sm';
+                label.innerHTML = `<span class="text-white font-bebas text-xs md:text-sm tracking-wider">${proj.title}</span>`;
+
+                inner.appendChild(img);
+                inner.appendChild(label);
+                outer.appendChild(inner);
+                container.appendChild(outer);
+                
+                projectElements.push(outer);
+            });
+        }
+
+        // State 1: Scattered around the center
+        function applyScatteredState() {
+            projectElements.forEach(outer => {
+                // Cluster randomly between 30% and 70% of the container
+                const randomLeft = 35 + Math.random() * 30;
+                const randomTop = 35 + Math.random() * 30;
+                
+                outer.style.left = `${randomLeft}%`;
+                outer.style.top = `${randomTop}%`;
+            });
+            catTitles.style.opacity = '0';
+        }
+
+        // State 2: Arranged into 3 distinct columns based on category
+        function applyArrangedState() {
+            const columnsLeft = { 'Game Dev': 20, 'Motion': 50, '3D': 80 };
+            const categoryTotals = { 'Game Dev': 5, 'Motion': 3, '3D': 4 };
+            const categoryCounts = { 'Game Dev': 0, 'Motion': 0, '3D': 0 };
+            
+            // Vertical gap between items (in percentage of container height)
+            const gapY = 16; 
+
+            projectElements.forEach((outer, idx) => {
+                const cat = projectsData[idx].cat;
+                const left = columnsLeft[cat];
+                
+                // Center the column vertically based on total items in that column
+                const totalInCat = categoryTotals[cat];
+                const startY = 55 - ((totalInCat - 1) * gapY) / 2; 
+                
+                const top = startY + categoryCounts[cat] * gapY;
+                categoryCounts[cat]++;
+                
+                outer.style.left = `${left}%`;
+                outer.style.top = `${top}%`;
+            });
+            catTitles.style.opacity = '1';
+        }
+
+        // Toggle Button Listener
+        arrangeBtn.addEventListener('click', () => {
+            isArranged = !isArranged;
+            if (isArranged) {
+                arrangeBtn.innerText = "SCATTER";
+                applyArrangedState();
+            } else {
+                arrangeBtn.innerText = "ARRANGE";
+                applyScatteredState();
+            }
+        });
+
+        // Proximity Hover Logic
+        // Calculate distance from mouse to the center of each project card
+        workSection.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const influenceRadius = 250; // px
+
+            projectElements.forEach(outer => {
+                const rect = outer.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const dist = Math.hypot(mouseX - centerX, mouseY - centerY);
+                
+                const inner = outer.querySelector('.proj-inner');
+                
+                if (dist < influenceRadius) {
+                    // Normalize distance (0 to 1) where 0 is dead center
+                    const factor = 1 - (dist / influenceRadius);
+                    // Scale up to 1.5x max
+                    const scale = 1 + (factor * 0.5);
+                    // Boost z-index to bring it forward
+                    const zIndex = Math.round(50 + factor * 50);
+                    
+                    inner.style.transform = `scale(${scale})`;
+                    outer.style.zIndex = zIndex;
+                } else {
+                    inner.style.transform = `scale(1)`;
+                    outer.style.zIndex = 10;
+                }
+            });
+        });
+
+        // Reset scales when mouse leaves the section entirely
+        workSection.addEventListener('mouseleave', () => {
+            projectElements.forEach(outer => {
+                const inner = outer.querySelector('.proj-inner');
+                inner.style.transform = `scale(1)`;
+                outer.style.zIndex = 10;
+            });
+        });
+
+        // Initialize setup
+        initProjects();
+        // Delay initial scatter slightly to ensure DOM is ready and transitions trigger
+        setTimeout(() => {
+            applyScatteredState();
+        }, 100);
+
+    </script>
 </body>
 </html>
