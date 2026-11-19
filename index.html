@@ -238,6 +238,21 @@
                 titleEl.className = 'text-gray-400 font-poppins font-semibold text-[10px] md:text-sm lg:text-base text-center px-2 pointer-events-none leading-tight';
                 titleEl.innerText = proj.title;
 
+                if (proj.img) {
+                    const imgEl = document.createElement('img');
+                    imgEl.src = proj.img;
+                    imgEl.alt = proj.title;
+                    imgEl.className = 'absolute inset-0 w-full h-full object-cover pointer-events-none opacity-0 transition-opacity duration-300';
+                    imgEl.onload = () => {
+                        imgEl.classList.remove('opacity-0');
+                        titleEl.style.display = 'none';
+                    };
+                    imgEl.onerror = () => {
+                        imgEl.style.display = 'none';
+                    };
+                    inner.appendChild(imgEl);
+                }
+                
                 // Subtitle (Small tag bottom left)
                 const subEl = document.createElement('div');
                 subEl.className = 'absolute bottom-1.5 left-1.5 md:bottom-2 md:left-2 bg-[#0a0a0a] rounded px-1.5 py-0.5 text-gray-200 font-bebas tracking-widest text-[8px] md:text-[10px] lg:text-xs pointer-events-none';
